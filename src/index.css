@@ -133,6 +133,14 @@ All colors MUST be HSL.
     @apply font-semibold tracking-tight;
   }
   
+  .animate-in {
+    animation-fill-mode: both;
+  }
+  
+  .scale-102 {
+    transform: scale(1.02);
+  }
+  
   /* Custom scrollbar for better aesthetics */
   ::-webkit-scrollbar {
     width: 10px;

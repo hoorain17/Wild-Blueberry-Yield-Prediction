@@ -1,20 +1,35 @@
+import { Navigation } from "@/components/Navigation";
 import { Section } from "@/components/Section";
 import { SectionHeader } from "@/components/SectionHeader";
 import { DataTable } from "@/components/DataTable";
 import { MetricCard } from "@/components/MetricCard";
-import { FeatureCard } from "@/components/FeatureCard";
+import { InteractiveFeatureCard } from "@/components/InteractiveFeatureCard";
+import { ImageSection } from "@/components/ImageSection";
+import { ModelTabs } from "@/components/ModelTabs";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import heroImage from "@/assets/hero-blueberries.jpg";
+import beeImage from "@/assets/bee-pollination.jpg";
+import dataImage from "@/assets/data-analysis.jpg";
+import weatherImage from "@/assets/weather-monitoring.jpg";
+import mlImage from "@/assets/ml-model.jpg";
+import labImage from "@/assets/research-lab.jpg";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
+      <Navigation />
+      
       {/* Hero Section */}
-      <section className="relative py-24 md:py-32 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-secondary/5 to-background" />
-        <div className="container max-w-6xl mx-auto px-4 md:px-6 relative">
-          <div className="text-center space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-            <div className="text-6xl md:text-7xl mb-6">🫐</div>
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: `url(${heroImage})` }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-background/90 via-background/70 to-background/95" />
+        </div>
+        <div className="container max-w-6xl mx-auto px-4 md:px-6 relative z-10 text-center py-32">
+          <div className="space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-1000">
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
               Wild Blueberry Yield{" "}
               <span className="bg-gradient-to-r from-primary via-primary-light to-secondary bg-clip-text text-transparent">
@@ -24,15 +39,17 @@ const Index = () => {
             <Badge variant="secondary" className="text-base px-4 py-2">
               Machine Learning Research Project
             </Badge>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Using XGBoost to predict agricultural yield based on pollination and climate factors
+            </p>
           </div>
         </div>
       </section>
 
       {/* Abstract */}
-      <Section>
+      <Section id="abstract">
         <Card className="p-8 md:p-12 shadow-lg">
-          <div className="flex items-start gap-4 mb-6">
-            <span className="text-4xl">📄</span>
+          <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
               <h2 className="text-2xl md:text-3xl font-bold mb-4 text-foreground">Abstract</h2>
               <p className="text-lg text-muted-foreground leading-relaxed">
@@ -44,12 +61,17 @@ const Index = () => {
                 productivity and sustainability.
               </p>
             </div>
+            <ImageSection 
+              image={beeImage}
+              alt="Bee pollinating blueberry flowers"
+              caption="Figure 1. Honeybee pollination - a critical factor in blueberry yield"
+            />
           </div>
         </Card>
       </Section>
 
       {/* Objective */}
-      <Section gradient>
+      <Section id="objective" gradient>
         <SectionHeader 
           icon="🎯"
           title="Objective"
@@ -58,7 +80,7 @@ const Index = () => {
       </Section>
 
       {/* Dataset Overview */}
-      <Section>
+      <Section id="dataset">
         <SectionHeader 
           icon="📊"
           title="Dataset Overview"
@@ -77,44 +99,61 @@ const Index = () => {
       </Section>
 
       {/* Data Preprocessing */}
-      <Section gradient>
+      <Section id="preprocessing" gradient>
         <SectionHeader 
           icon="🧼"
           title="Data Preprocessing"
         />
         
         <div className="grid md:grid-cols-2 gap-6">
-          <FeatureCard
+          <InteractiveFeatureCard
             icon="🔍"
             title="Data Quality"
-            description="Checked for missing values and outliers to ensure data integrity"
+            description="Checked for missing values and outliers"
+            details="Comprehensive data validation including null checks, outlier detection using IQR method, and data type verification to ensure high-quality inputs for modeling."
           />
-          <FeatureCard
+          <InteractiveFeatureCard
             icon="⚖️"
             title="Scaling & Encoding"
-            description="Applied scaling and feature encoding where necessary"
+            description="Applied scaling and feature encoding"
+            details="StandardScaler for numerical features and one-hot encoding for categorical variables. This ensures all features are on comparable scales for optimal model performance."
           />
-          <FeatureCard
+          <InteractiveFeatureCard
             icon="✂️"
             title="Data Splitting"
             description="Split data into 80% training and 20% testing sets"
+            details="Stratified split to maintain distribution of target variable across both sets. Training set used for model development, test set for final evaluation."
           />
-          <FeatureCard
+          <InteractiveFeatureCard
             icon="📈"
             title="Distribution Analysis"
-            description="Verified distribution of target variable for model stability"
+            description="Verified distribution of target variable"
+            details="Analyzed yield distribution for normality, skewness, and outliers. Ensures model assumptions are met and predictions will be reliable."
           />
         </div>
       </Section>
 
       {/* EDA */}
-      <Section>
+      <Section id="analysis">
         <SectionHeader 
           icon="🔍"
           title="Exploratory Data Analysis"
           subtitle="Key insights discovered through comprehensive data exploration"
         />
         
+        <div className="grid md:grid-cols-2 gap-8 mb-8">
+          <ImageSection 
+            image={weatherImage}
+            alt="Weather monitoring equipment"
+            caption="Figure 2. Environmental monitoring in blueberry fields"
+          />
+          <ImageSection 
+            image={dataImage}
+            alt="Data analysis dashboard"
+            caption="Figure 3. Statistical analysis and correlation patterns"
+          />
+        </div>
+
         <div className="space-y-6">
           <Card className="p-6 border-l-4 border-l-primary">
             <div className="flex items-start gap-3">
@@ -153,30 +192,23 @@ const Index = () => {
       </Section>
 
       {/* Modeling Approach */}
-      <Section gradient>
+      <Section id="modeling" gradient>
         <SectionHeader 
           icon="⚙️"
           title="Modeling Approach"
         />
         
-        <div className="grid md:grid-cols-3 gap-6 mb-12">
-          <Card className="p-6">
-            <h3 className="text-xl font-semibold mb-3 text-foreground">Linear Regression</h3>
-            <p className="text-muted-foreground">Baseline model for simple relationships</p>
-          </Card>
-          
-          <Card className="p-6">
-            <h3 className="text-xl font-semibold mb-3 text-foreground">Random Forest</h3>
-            <p className="text-muted-foreground">Ensemble approach for non-linear patterns</p>
-          </Card>
-          
-          <Card className="p-6 border-2 border-primary">
-            <h3 className="text-xl font-semibold mb-3 text-primary">XGBoost ⭐</h3>
-            <p className="text-muted-foreground">Final selected model due to best performance</p>
-          </Card>
+        <div className="mb-12">
+          <ImageSection 
+            image={mlImage}
+            alt="Machine learning model visualization"
+            caption="Figure 4. Neural network architecture and feature connections"
+          />
         </div>
 
-        <Card className="p-8">
+        <ModelTabs />
+
+        <Card className="mt-8 p-8">
           <h3 className="text-2xl font-bold mb-6 text-center text-foreground">Why XGBoost?</h3>
           <div className="grid md:grid-cols-3 gap-6">
             <div className="text-center">
@@ -199,13 +231,21 @@ const Index = () => {
       </Section>
 
       {/* Model Evaluation */}
-      <Section>
+      <Section id="results">
         <SectionHeader 
           icon="🧠"
           title="Model Training & Evaluation"
           subtitle="Comprehensive performance metrics across all tested models"
         />
         
+        <div className="mb-12">
+          <ImageSection 
+            image={labImage}
+            alt="Research laboratory"
+            caption="Figure 5. Data analysis and model evaluation workspace"
+          />
+        </div>
+
         <div className="grid md:grid-cols-3 gap-6 mb-12">
           <MetricCard label="R² Score" value="Explained Variance" icon="📐" />
           <MetricCard label="MAE" value="Mean Absolute Error" icon="📏" />
@@ -226,18 +266,10 @@ const Index = () => {
             ✅ The XGBoost model performed the best, showing high predictive accuracy and stability.
           </p>
         </Card>
-      </Section>
 
-      {/* Feature Importance */}
-      <Section gradient>
-        <SectionHeader 
-          icon="🧩"
-          title="Feature Importance & Explainability"
-          subtitle="Understanding which variables drive blueberry yield predictions"
-        />
-        
-        <Card className="p-8 mb-8">
-          <h3 className="text-xl font-semibold mb-6 text-center text-foreground">
+        {/* Feature Importance */}
+        <div className="mt-16">
+          <h3 className="text-2xl font-bold mb-8 text-center text-foreground">
             Top 5 Influential Features
           </h3>
           
@@ -251,7 +283,7 @@ const Index = () => {
             ].map((item) => (
               <div
                 key={item.rank}
-                className="flex items-center gap-4 p-4 bg-card rounded-lg border border-border hover:shadow-md transition-shadow"
+                className="flex items-center gap-4 p-4 bg-card rounded-lg border border-border hover:shadow-md hover:scale-102 transition-all duration-300 cursor-pointer"
               >
                 <div className="flex-shrink-0 w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center font-bold text-primary">
                   {item.rank}
@@ -264,70 +296,65 @@ const Index = () => {
               </div>
             ))}
           </div>
-        </Card>
+        </div>
 
-        <Card className="p-6 bg-muted/50">
+        <Card className="mt-8 p-6 bg-muted/50">
           <p className="text-center text-lg font-medium text-foreground">
             <span className="text-2xl mr-2">🧠</span>
             The presence of bee species contributes most to yield, while excessive rainfall negatively affects productivity.
           </p>
         </Card>
-      </Section>
 
-      {/* Results Summary */}
-      <Section>
-        <SectionHeader 
-          icon="📈"
-          title="Results Summary"
-        />
-        
-        <div className="grid md:grid-cols-3 gap-6">
-          <MetricCard 
-            icon="🎯"
-            label="R² Score Achieved"
-            value="0.88"
-            className="bg-primary/5"
-          />
-          <MetricCard 
-            icon="🐝"
-            label="Key Factor"
-            value="Bee Activity"
-            className="bg-secondary/5"
-          />
-          <MetricCard 
-            icon="🌧️"
-            label="Critical Variable"
-            value="Rainfall"
-            className="bg-accent/5"
-          />
+        {/* Results Summary */}
+        <div className="mt-16">
+          <div className="grid md:grid-cols-3 gap-6 mb-8">
+            <MetricCard 
+              icon="🎯"
+              label="R² Score Achieved"
+              value="0.88"
+              className="bg-primary/5"
+            />
+            <MetricCard 
+              icon="🐝"
+              label="Key Factor"
+              value="Bee Activity"
+              className="bg-secondary/5"
+            />
+            <MetricCard 
+              icon="🌧️"
+              label="Critical Variable"
+              value="Rainfall"
+              className="bg-accent/5"
+            />
+          </div>
+
+          <Card className="p-8">
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3">
+                <span className="text-2xl">✅</span>
+                <p className="text-foreground leading-relaxed">
+                  XGBoost achieved an R² of <span className="font-semibold text-primary">0.88</span>, outperforming all baseline models.
+                </p>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-2xl">🐝</span>
+                <p className="text-foreground leading-relaxed">
+                  <span className="font-semibold">Bee activity and rainfall</span> emerged as the most critical factors influencing yield.
+                </p>
+              </li>
+              <li className="flex items-start gap-3">
+                <span className="text-2xl">🌱</span>
+                <p className="text-foreground leading-relaxed">
+                  The model provides a strong foundation for <span className="font-semibold">precision agriculture</span> and can guide pollination management and climate adaptation strategies.
+                </p>
+              </li>
+            </ul>
+          </Card>
         </div>
-
-        <Card className="mt-12 p-8">
-          <ul className="space-y-4">
-            <li className="flex items-start gap-3">
-              <span className="text-2xl">✅</span>
-              <p className="text-foreground leading-relaxed">
-                XGBoost achieved an R² of <span className="font-semibold text-primary">0.88</span>, outperforming all baseline models.
-              </p>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-2xl">🐝</span>
-              <p className="text-foreground leading-relaxed">
-                <span className="font-semibold">Bee activity and rainfall</span> emerged as the most critical factors influencing yield.
-              </p>
-            </li>
-            <li className="flex items-start gap-3">
-              <span className="text-2xl">🌱</span>
-              <p className="text-foreground leading-relaxed">
-                The model provides a strong foundation for <span className="font-semibold">precision agriculture</span> and can guide pollination management and climate adaptation strategies.
-              </p>
-            </li>
-          </ul>
-        </Card>
       </Section>
 
       {/* Conclusion */}
-      <Section gradient>
+      <Section id="conclusion" gradient>
         <SectionHeader 
           icon="🧭"
           title="Conclusion"
@@ -343,18 +370,24 @@ const Index = () => {
           <div className="mt-8">
             <h3 className="text-xl font-semibold mb-4 text-foreground">Future Improvements</h3>
             <div className="grid md:grid-cols-3 gap-4">
-              <Card className="p-4 bg-background">
-                <div className="text-2xl mb-2">🔮</div>
-                <p className="text-sm text-muted-foreground">Integration of SHAP or LIME for enhanced explainability</p>
-              </Card>
-              <Card className="p-4 bg-background">
-                <div className="text-2xl mb-2">📅</div>
-                <p className="text-sm text-muted-foreground">Time-series modeling with seasonal trends</p>
-              </Card>
-              <Card className="p-4 bg-background">
-                <div className="text-2xl mb-2">🌐</div>
-                <p className="text-sm text-muted-foreground">Deployment as a web dashboard for farmers and researchers</p>
-              </Card>
+              <InteractiveFeatureCard
+                icon="🔮"
+                title="Enhanced Explainability"
+                description="Integration of SHAP or LIME"
+                details="Implement Shapley Additive Explanations (SHAP) and Local Interpretable Model-agnostic Explanations (LIME) for deeper insight into individual predictions and feature contributions."
+              />
+              <InteractiveFeatureCard
+                icon="📅"
+                title="Time-Series Modeling"
+                description="Seasonal trends analysis"
+                details="Develop ARIMA or Prophet models to capture temporal patterns, seasonal variations, and long-term trends in yield prediction across multiple growing seasons."
+              />
+              <InteractiveFeatureCard
+                icon="🌐"
+                title="Web Dashboard"
+                description="Deployment for stakeholders"
+                details="Create an interactive web application with real-time predictions, data visualization, and decision support tools for farmers and agricultural researchers."
+              />
             </div>
           </div>
         </Card>
@@ -385,7 +418,9 @@ const Index = () => {
       {/* Footer */}
       <footer className="py-12 border-t border-border">
         <div className="container max-w-6xl mx-auto px-4 md:px-6 text-center">
-          <div className="text-4xl mb-4">🫐</div>
+          <div className="w-16 h-16 mx-auto mb-4 rounded-full overflow-hidden">
+            <img src={heroImage} alt="Blueberries" className="w-full h-full object-cover" />
+          </div>
           <p className="text-muted-foreground">
             Wild Blueberry Yield Prediction Research Project
           </p>
